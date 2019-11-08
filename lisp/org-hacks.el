@@ -7,17 +7,22 @@
 (require 'ox-beamer)
 (require 'ox-md)
 
-;; Doesn't look good
+;; Doesn't look good, so disabling for now.
 ;(setq org-latex-listings t)
 ;(add-to-list 'org-latex-packages-alist '("" "listings"))
 ;(add-to-list 'org-latex-packages-alist '("" "color"))
 
+;; Beamer settings
 (add-to-list 'org-latex-classes
              '("beamer"
                "\\documentclass\[presentation\]\{beamer\}"
                ("\\section\{%s\}" . "\\section*\{%s\}")
                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+
+;; LaTeX settings
+(add-to-list 'org-latex-packages-alist '("" "listing"))
+(add-to-list 'org-latex-packages-alist '("" "color"))
 
 
 ;; ISpell settings
@@ -169,6 +174,7 @@ Skips capture tasks and tasks with subtasks"
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((R . t)
+   (C . t)
    (plantuml . t)
    (dot . t)
    (emacs-lisp . t)
