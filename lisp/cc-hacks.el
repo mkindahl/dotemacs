@@ -20,7 +20,7 @@ Use the .clang-format file, if one exists in some parent
 directory. Otherwise, use the value of 'clang-format-style."
   (save-excursion
     (delete-trailing-whitespace (point-min) (point-max))
-    ;; (mk/clang-format-buffer (if (locate-dominating-file "." ".clang-format") "file" clang-format-style)
+    (mk/clang-format-buffer (if (locate-dominating-file "." ".clang-format") "file" clang-format-style))
     nil))
 
 (defun turn-on-format-buffer ()
@@ -39,4 +39,3 @@ directory. Otherwise, use the value of 'clang-format-style."
 (with-eval-after-load 'c-mode
   (add-hook 'c-mode-hook #'turn-on-format-buffer)
   (add-hook 'c-mode-hook #'turn-on-show-trailing-whitespace))
-
