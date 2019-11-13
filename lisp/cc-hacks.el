@@ -1,5 +1,6 @@
 (require 'clang-format)
-
+(require 'cquery)
+		
 ;; Show trailing whitespace in red
 (defun turn-on-show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
@@ -26,6 +27,10 @@ directory. Otherwise, use the value of 'clang-format-style."
 (defun turn-on-format-buffer ()
   "Format buffer before saving."
   (add-hook 'write-contents-functions 'mk/format-buffer))
+
+(with-eval-after-load 'cquery
+  (setq cquery-executable
+	(expand-file-name "~/.local/bin/cquery")))
 
 (with-eval-after-load 'lsp-mode
   (add-hook 'c-mode-hook #'lsp)

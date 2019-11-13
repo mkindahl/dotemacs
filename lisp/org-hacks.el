@@ -7,6 +7,11 @@
 (require 'ox-beamer)
 (require 'ox-md)
 
+;; Doesn't look good
+;(setq org-latex-listings t)
+;(add-to-list 'org-latex-packages-alist '("" "listings"))
+;(add-to-list 'org-latex-packages-alist '("" "color"))
+
 (add-to-list 'org-latex-classes
              '("beamer"
                "\\documentclass\[presentation\]\{beamer\}"

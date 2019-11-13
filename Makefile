@@ -1,8 +1,8 @@
-%.elc: %.el
-	emacs -batch -f batch-byte-compile-if-not-done $<
-
 compiled = lisp/cc-hacks.elc lisp/org-hacks.elc
 prefix = $(HOME)/.local
+
+%.elc: %.el
+	EMACSLOADPATH=$(prefix)/share/emacs/site-lisp: emacs -batch -f batch-byte-compile-if-not-done $<
 
 all: $(compiled)
 
