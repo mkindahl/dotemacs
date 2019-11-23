@@ -1,6 +1,31 @@
 (require 'clang-format)
 (require 'cquery)
 		
+(defun mk/symbol-from-filename (full-name)
+  (let* ((root-dir (expand-file-name (locate-dominating-file full-name ".git")))
+	 (upcase-name (upcase (string-remove-prefix root-dir (expand-file-name full-name)))))
+    (message (format "upcase-name: %s" upcase-name))
+    (dotimes (i (length upcase-name))
+      (let ((c (aref upcase-name i)))
+        (unless (or (and (>= c ?A) (<= c ?Z))
+                    (and (>= c ?0) (<= c ?9)))
+          (aset upcase-name i ?_))))
+    (concat upcase-name "_")))
+
+(defun mk/add-header-include-guard ()
+  (interactive)
+  (let ((pp-sym (cc-hacks-symbol-from-filename (buffer-file-name))))
+    (save-excursion
+      (goto-char (point-min))
+      (c-forward-comments)
+      (if (not (looking-at "#ifndef[[:blank:]]+\\([[:alnum:]_]+\\)\n#define[[:blank:]]+\\1"))
+          (progn
+            (goto-char (point-min))
+            (c-forward-comments)
+            (insert (concat "#ifndef " pp-sym "\n" "#define " pp-sym "\n\n"))
+            (goto-char (point-max))
+            (insert (concat "\n#endif  /* " pp-sym " */\n")))))))
+
 ;; Show trailing whitespace in red
 (defun turn-on-show-trailing-whitespace ()
   (setq show-trailing-whitespace t))
