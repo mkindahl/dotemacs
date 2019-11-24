@@ -22,6 +22,23 @@ There are two things you can do about this warning:
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+(if (string-match "XEmacs\\|Lucid" emacs-version)
+  ;;; XEmacs
+  (progn
+     (if (file-readable-p "~/.xemacs/init.el")
+        (load "~/.xemacs/init.el" nil t))
+  )
+  ;;; GNU-Emacs
+  (if (file-readable-p "~/.gnu-emacs")
+      (load "~/.gnu-emacs" nil t)
+    (if (file-readable-p "/etc/skel/.gnu-emacs")
+	(load "/etc/skel/.gnu-emacs" nil t)))
+
+  ;; Custom Settings
+  (setq custom-file "~/.gnu-emacs-custom")
+  (load "~/.gnu-emacs-custom" t t)
+)
+
 ;; System Setting
 (setq system-time-locale "C") ; Make sure that the weekdays in the
 			      ; time stamps of your Org mode files and
@@ -32,10 +49,6 @@ There are two things you can do about this warning:
 
 (load-library "org-hacks")              ;Org Mode settings
 (load-library "cc-hacks")               ;C/C++ Settings
-
-;; (setq c-default-style `((c-mode . "google")
-;;                         (c++-mode . "google")
-;;                         ,@c-default-style))
 
 (global-set-key "\C-x\C-e" 'compile)
 (global-set-key "\C-x\C-n" 'next-error)
