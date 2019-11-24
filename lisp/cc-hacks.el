@@ -1,6 +1,7 @@
 (require 'clang-format)
-(require 'cquery)
-		
+(require 'cc-mode)
+(require 'lsp)
+
 (defun mk/symbol-from-filename (full-name)
   (let* ((root-dir (expand-file-name (locate-dominating-file full-name ".git")))
 	 (upcase-name (upcase (string-remove-prefix root-dir (expand-file-name full-name)))))
@@ -14,7 +15,7 @@
 
 (defun mk/add-header-include-guard ()
   (interactive)
-  (let ((pp-sym (cc-hacks-symbol-from-filename (buffer-file-name))))
+  (let ((pp-sym (mk/symbol-from-filename (buffer-file-name))))
     (save-excursion
       (goto-char (point-min))
       (c-forward-comments)
@@ -46,16 +47,47 @@ Use the .clang-format file, if one exists in some parent
 directory. Otherwise, use the value of 'clang-format-style."
   (save-excursion
     (delete-trailing-whitespace (point-min) (point-max))
-    (mk/clang-format-buffer (if (locate-dominating-file "." ".clang-format") "file" clang-format-style))
+    (mk/clang-format-buffer
+     (if (locate-dominating-file "." ".clang-format")
+	 "file"
+       clang-format-style))
     nil))
+
+(defun mk/wrap-code (tag start finish)
+  (goto-char start)
+  (let ((symbol-point (insert (concat "#" tag " "))))
+    (goto-char finish)
+    (insert (concat "#endif"))
+    (goto-char symbol-point)))
+
+(defun mk/comment-out (start finish)
+  (save-excursion
+    (goto-char start)
+    (insert (concat "#if 0"))
+    (goto-char finish)
+    (insert (concat "#endif"))))
+
+(defun mk/ifdef-code (start finish)
+  (interactive "r")
+  (mk/wrap-code "ifdef" start finish))
+
+(defun mk/ifndef-code (start finish)
+  (interactive "r")
+  (mk/wrap-code "ifndef" start finish))
+
+(defun mk/custom-cc-keys-adder (mode-map)
+  "Return a function that when executed adds custom keys to the
+provided key-map."
+  (lambda ()
+    (define-key mode-map "\C-chw" 'mk/add-header-include-guard)
+    (define-key mode-map "\C-c#0" 'mk/comment-out)
+    (define-key mode-map "\C-c#d" 'mk/ifdef-code)
+    (define-key mode-map "\C-c#n" 'mk/ifndef-code)))
+    
 
 (defun turn-on-format-buffer ()
   "Format buffer before saving."
   (add-hook 'write-contents-functions 'mk/format-buffer))
-
-(with-eval-after-load 'cquery
-  (setq cquery-executable
-	(expand-file-name "~/.local/bin/cquery")))
 
 (with-eval-after-load 'lsp-mode
   (add-hook 'c-mode-hook #'lsp)
@@ -64,8 +96,10 @@ directory. Otherwise, use the value of 'clang-format-style."
 
 (with-eval-after-load 'c++-mode
   (add-hook 'c++-mode-hook #'turn-on-format-buffer)
-  (add-hook 'c++-mode-hook #'turn-on-show-trailing-whitespace))
+  (add-hook 'c++-mode-hook #'turn-on-show-trailing-whitespace)
+  (add-hook 'c++-mode-hook (mk/custom-cc-keys-adder c++-mode-map)))
 
 (with-eval-after-load 'c-mode
   (add-hook 'c-mode-hook #'turn-on-format-buffer)
-  (add-hook 'c-mode-hook #'turn-on-show-trailing-whitespace))
+  (add-hook 'c-mode-hook #'turn-on-show-trailing-whitespace)
+  (add-hook 'c++-mode-hook (mk/custom-cc-keys-adder c-mode-map)))
