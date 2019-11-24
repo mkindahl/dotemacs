@@ -1,4 +1,6 @@
 (require 'package)
+(require 'lsp)
+
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
@@ -53,6 +55,43 @@ There are two things you can do about this warning:
 (global-set-key "\C-x\C-e" 'compile)
 (global-set-key "\C-x\C-n" 'next-error)
 (global-set-key "\C-x\C-p" 'previous-error)
+
+;; Set the default values of some variables
+;; RST mode settings
+(autoload 'rst-mode "rst-mode"
+  "Major mode for editing reStructuredText documents" t)
+(add-to-list 'auto-mode-alist '("\\.rst\\'" . rst-mode))
+
+;; JavaScript mode settings
+(autoload 'javascript-mode "javascript" 
+  "Major mode for editing JavaScript" t)
+(add-to-list 'auto-mode-alist '("\\.js\\'" . javascript-mode))
+
+;; Promela mode settings
+(autoload 'promela-mode "promela-mode" "PROMELA mode" t)
+(add-to-list 'auto-mode-alist '("\\.\\(spin\\|pml\\)\\'" . promela-mode))
+
+;; Python mode settings
+(add-hook 'python-mode-hook #'lsp)
+
+;; KerboScript mode settings
+(autoload 'ks-mode "ks"
+  "Major mode for editing KerboScript" t)
+(add-to-list 'auto-mode-alist '("\\.ks\\'" . ks-mode))
+
+;; Markdown settings
+(add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
+
+;; Protobuf settings
+(autoload 'protobuf-mode "protobuf-mode"
+  "Major mode for editing Protocol Buffers description language." t)
+(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
+
+;;; Rust settings
+(add-hook 'rust-mode-hook #'lsp)
+
+;;; TeX mode setting
+(setq tex-dvi-view-command "okular")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
