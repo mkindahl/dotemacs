@@ -2,9 +2,14 @@
 
 ;(add-to-list 'load-path "/usr/share/emacs/site-lisp/org")
 
+(require 'ob-plantuml)
 (require 'org)
-(require 'ox-latex)
+(require 'org-agenda)
+(require 'org-capture)
+(require 'org-clock)
+(require 'org-duration)
 (require 'ox-beamer)
+(require 'ox-latex)
 (require 'ox-md)
 
 ;; Doesn't look good
