@@ -13,8 +13,13 @@
 (require 'ox-md)
 
 ;; Doesn't look good
-;(setq org-latex-listings t)
-;(add-to-list 'org-latex-packages-alist '("" "listings"))
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-pdf-process
+      '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+
 ;(add-to-list 'org-latex-packages-alist '("" "color"))
 
 (add-to-list 'org-latex-classes
