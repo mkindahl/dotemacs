@@ -12,10 +12,12 @@
 (require 'ox-latex)
 (require 'ox-md)
 
-;; Doesn't look good, so disabling for now.
-;(setq org-latex-listings t)
-;(add-to-list 'org-latex-packages-alist '("" "listings"))
-;(add-to-list 'org-latex-packages-alist '("" "color"))
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-pdf-process
+      '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 ;; Beamer settings
 (add-to-list 'org-latex-classes
