@@ -2,22 +2,34 @@
 
 ;(add-to-list 'load-path "/usr/share/emacs/site-lisp/org")
 
+(require 'ob-plantuml)
 (require 'org)
-(require 'ox-latex)
+(require 'org-agenda)
+(require 'org-capture)
+(require 'org-clock)
+(require 'org-duration)
 (require 'ox-beamer)
+(require 'ox-latex)
 (require 'ox-md)
 
-;; Doesn't look good
-;(setq org-latex-listings t)
-;(add-to-list 'org-latex-packages-alist '("" "listings"))
-;(add-to-list 'org-latex-packages-alist '("" "color"))
+(setq org-latex-listings 'minted)
+(add-to-list 'org-latex-packages-alist '("" "minted"))
+(setq org-latex-pdf-process
+      '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
+;; Beamer settings
 (add-to-list 'org-latex-classes
              '("beamer"
                "\\documentclass\[presentation\]\{beamer\}"
                ("\\section\{%s\}" . "\\section*\{%s\}")
                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
+
+;; LaTeX settings
+(add-to-list 'org-latex-packages-alist '("" "listing"))
+(add-to-list 'org-latex-packages-alist '("" "color"))
 
 
 ;; ISpell settings
@@ -169,6 +181,7 @@ Skips capture tasks and tasks with subtasks"
 (org-babel-do-load-languages
  'org-babel-load-languages
  '((R . t)
+   (C . t)
    (plantuml . t)
    (dot . t)
    (emacs-lisp . t)
