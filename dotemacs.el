@@ -102,7 +102,7 @@ There are two things you can do about this warning:
  '(indent-tabs-mode t)
  '(org-agenda-files
    (quote
-    ("~/org/bugs.org" "~/org/someday.org" "~/org/admin.org" "~/org/research.org" "~/org/meetings.org" "~/org/refactoring.org" "~/org/reviews.org" "~/org/projects.org" "~/org/refile.org")))
+    ("~/org/someday.org" "~/org/refile.org" "~/org/projects.org" "~/org/personal.org" "~/org/company.org")))
  '(org-src-preserve-indentation t)
  '(rust-format-on-save t))
 
