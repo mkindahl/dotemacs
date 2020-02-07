@@ -15,8 +15,7 @@ compile-lisp: $(compiled)
 install: install-lisp install-dotemacs
 
 install-lisp: $(compiled)
-	mkdir -p $(prefix)/share/emacs/site-lisp
-	cp $(compiled) $(prefix)/share/emacs/site-lisp
+	install -t $(prefix)/share/emacs/site-lisp $(compiled) 
 
 install-dotemacs:
 	cp dotemacs.el $(HOME)/.emacs
