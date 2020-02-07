@@ -7,6 +7,7 @@
 (require 'org-agenda)
 (require 'org-capture)
 (require 'org-clock)
+(require 'org-tempo)
 (require 'org-duration)
 (require 'ox-beamer)
 (require 'ox-latex)

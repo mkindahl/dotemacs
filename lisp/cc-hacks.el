@@ -1,6 +1,7 @@
 (require 'clang-format)
 (require 'cc-mode)
 (require 'lsp)
+(require 'lsp-clients)
 
 (defun mk/symbol-from-filename (full-name)
   (let* ((root-dir (expand-file-name (locate-dominating-file full-name ".git")))
