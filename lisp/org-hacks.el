@@ -65,7 +65,7 @@
                            ("someday.org" :maxlevel . 2)))
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)" "REVIEW(r!)"
+      '((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)"
                   "|" "DONE(f!)")
         (sequence "DEFERRED(h@/!)" "DELEGATED(d@)" "WAITING(w@/!)"
                   "|" "REASSIGNED(o@)" "CANCELED(x@)")
