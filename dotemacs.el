@@ -1,4 +1,6 @@
 (require 'package)
+(require 'lsp)
+
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
        (proto (if no-ssl "http" "https")))
@@ -53,6 +55,22 @@ There are two things you can do about this warning:
 (global-set-key "\C-x\C-e" 'compile)
 (global-set-key "\C-x\C-n" 'next-error)
 (global-set-key "\C-x\C-p" 'previous-error)
+
+;; Promela mode settings
+(autoload 'promela-mode "promela-mode" "PROMELA mode" t)
+(add-to-list 'auto-mode-alist '("\\.\\(spin\\|pml\\)\\'" . promela-mode))
+
+;; Python mode settings
+(add-hook 'python-mode-hook #'lsp)
+
+;; Markdown settings
+(add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
+
+;;; Rust settings
+(add-hook 'rust-mode-hook #'lsp)
+
+;;; TeX mode setting
+(setq tex-dvi-view-command "okular")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
