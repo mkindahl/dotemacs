@@ -1,6 +1,6 @@
 compiled = lisp/cc-hacks.elc lisp/org-hacks.elc
 prefix = $(HOME)/.local
-COMPILE.el = emacs -batch -f batch-byte-compile-if-not-done
+COMPILE.el = emacs -batch -f package-initialize -f batch-byte-compile-if-not-done
 DIFF = diff -u
 
 %.elc: %.el
@@ -24,6 +24,7 @@ compile-lisp: $(compiled)
 install: install-lisp install-dotemacs
 
 install-lisp: $(compiled)
+	mkdir -p $(prefix)/share/emacs/site-lisp
 	install -t $(prefix)/share/emacs/site-lisp $(compiled) 
 
 install-dotemacs:
