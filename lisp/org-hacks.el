@@ -7,11 +7,16 @@
 (require 'org-agenda)
 (require 'org-capture)
 (require 'org-clock)
-(require 'org-tempo)
-(require 'org-duration)
 (require 'ox-beamer)
 (require 'ox-latex)
 (require 'ox-md)
+
+(when (version< "9.2" (org-version))
+  (require 'org-tempo))
+(when (version<= "9.1.6" (org-version))
+  (require 'org-duration)
+  ;;; We want the week summary to be displayed in hours, not days.
+  (setq org-duration-format 'h:mm))
 
 (setq org-latex-listings 'minted)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
@@ -53,10 +58,6 @@
       org-agenda-skip-deadline-if-done t
       org-agenda-skip-scheduled-if-done t
       org-agenda-columns-add-appointments-to-effort-sum t)
-
-;;; We want the week summary to be displayed in hours, not days.
-(setq org-duration-format 'h:mm)
-
 
 ;;; Refile configuraton
 (setq org-refile-use-outline-path 'file

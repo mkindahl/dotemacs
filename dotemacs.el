@@ -1,5 +1,4 @@
 (require 'package)
-(require 'lsp)
 
 (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
                     (not (gnutls-available-p))))
@@ -23,6 +22,8 @@ There are two things you can do about this warning:
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
+
+(require 'lsp-mode)
 
 (if (string-match "XEmacs\\|Lucid" emacs-version)
   ;;; XEmacs
