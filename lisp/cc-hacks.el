@@ -1,6 +1,6 @@
 (require 'clang-format)
 (require 'cc-mode)
-(require 'lsp)
+(require 'lsp-mode)
 (require 'lsp-clients)
 
 (defun mk/symbol-from-filename (full-name)
