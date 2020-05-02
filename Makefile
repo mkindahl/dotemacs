@@ -14,7 +14,7 @@ diff-dotemacs:
 	$(DIFF) dotemacs.el $(HOME)/.emacs
 
 diff-lisp:
-	$(DIFF) lisp $(prefix)/share/emacs/site-lisp
+	$(DIFF) -x '*~' -x '*.el' lisp $(prefix)/share/emacs/site-lisp
 
 compile-dotemacs:
 	$(COMPILE.el) dotemacs.el
@@ -28,4 +28,4 @@ install-lisp: $(compiled)
 	install -t $(prefix)/share/emacs/site-lisp $(compiled) 
 
 install-dotemacs:
-	cp dotemacs.el $(HOME)/.emacs
+	install -T -C dotemacs.el $(HOME)/.emacs

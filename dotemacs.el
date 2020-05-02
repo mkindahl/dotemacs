@@ -23,8 +23,6 @@ There are two things you can do about this warning:
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(require 'lsp-mode)
-
 (if (string-match "XEmacs\\|Lucid" emacs-version)
   ;;; XEmacs
   (progn
@@ -52,6 +50,8 @@ There are two things you can do about this warning:
 
 (load-library "org-hacks")              ;Org Mode settings
 (load-library "cc-hacks")               ;C/C++ Settings
+(load-library "rust-hacks")             ;Rust Settings
+(load-library "python-hacks")           ;Python Settings
 
 (global-set-key "\C-x\C-e" 'compile)
 (global-set-key "\C-x\C-n" 'next-error)
@@ -72,24 +72,8 @@ There are two things you can do about this warning:
 (autoload 'promela-mode "promela-mode" "PROMELA mode" t)
 (add-to-list 'auto-mode-alist '("\\.\\(spin\\|pml\\)\\'" . promela-mode))
 
-;; Python mode settings
-(add-hook 'python-mode-hook #'lsp)
-
-;; KerboScript mode settings
-(autoload 'ks-mode "ks"
-  "Major mode for editing KerboScript" t)
-(add-to-list 'auto-mode-alist '("\\.ks\\'" . ks-mode))
-
 ;; Markdown settings
 (add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
-
-;; Protobuf settings
-(autoload 'protobuf-mode "protobuf-mode"
-  "Major mode for editing Protocol Buffers description language." t)
-(add-to-list 'auto-mode-alist '("\\.proto\\'" . protobuf-mode))
-
-;;; Rust settings
-(add-hook 'rust-mode-hook #'lsp)
 
 ;;; TeX mode setting
 (setq tex-dvi-view-command "okular")
