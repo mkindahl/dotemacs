@@ -1,4 +1,5 @@
-compiled = lisp/cc-hacks.elc lisp/org-hacks.elc
+compiled = lisp/cc-hacks.elc lisp/org-hacks.elc lisp/rust-hacks.elc \
+	lisp/python-hacks.elc
 prefix = $(HOME)/.local
 COMPILE.el = emacs -batch -f package-initialize -f batch-byte-compile-if-not-done
 DIFF = diff -u
