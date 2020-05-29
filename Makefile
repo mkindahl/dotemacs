@@ -1,7 +1,8 @@
 compiled = lisp/cc-hacks.elc lisp/org-hacks.elc lisp/rust-hacks.elc \
 	lisp/python-hacks.elc
 prefix = $(HOME)/.local
-COMPILE.el = emacs -batch -f package-initialize -f batch-byte-compile-if-not-done
+EMACS-BATCH = emacs -batch -f package-initialize 
+COMPILE.el = $(EMACS-BATCH) -f batch-byte-compile-if-not-done
 DIFF = diff -u
 
 %.elc: %.el
@@ -22,7 +23,11 @@ compile-dotemacs:
 
 compile-lisp: $(compiled)
 
-install: install-lisp install-dotemacs
+install: install-dependencies install-lisp install-dotemacs
+
+install-dependencies:
+	sudo apt install clang-tools elpa-spinner
+	$(EMACS-BATCH) --eval "(package-install 'lsp-mode)"
 
 install-lisp: $(compiled)
 	mkdir -p $(prefix)/share/emacs/site-lisp
