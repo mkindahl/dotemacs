@@ -40,7 +40,7 @@
 	   style)
   (clang-format-buffer style))
 
-(defun mk/format-buffer ()
+(defun mk/format-cc-buffer ()
   "Format buffer by removing trailing whitespace and formatting
 the buffer using clang-format.
 
@@ -76,31 +76,26 @@ directory. Otherwise, use the value of 'clang-format-style."
   (interactive "r")
   (mk/wrap-code "ifndef" start finish))
 
-(defun mk/custom-cc-keys-adder (mode-map)
+(defun mk/add-custom-cc-keys ()
   "Return a function that when executed adds custom keys to the
 provided key-map."
-  (lambda ()
-    (define-key mode-map "\C-chw" 'mk/add-header-include-guard)
-    (define-key mode-map "\C-c#0" 'mk/comment-out)
-    (define-key mode-map "\C-c#d" 'mk/ifdef-code)
-    (define-key mode-map "\C-c#n" 'mk/ifndef-code)))
-    
+  (message "Adding keys")
+  (define-key c-mode-base-map "\C-chw" 'mk/add-header-include-guard)
+  (define-key c-mode-base-map "\C-c#0" 'mk/comment-out)
+  (define-key c-mode-base-map "\C-c#d" 'mk/ifdef-code)
+  (define-key c-mode-base-map "\C-c#n" 'mk/ifndef-code)
+  (define-key c-mode-base-map "\M-." 'lsp-find-definition)
+  (define-key c-mode-base-map "\M-?" 'lsp-find-references))
 
-(defun turn-on-format-buffer ()
+(defun turn-on-format-cc-buffer ()
   "Format buffer before saving."
-  (add-hook 'write-contents-functions 'mk/format-buffer))
+  (add-hook 'write-contents-functions 'mk/format-cc-buffer))
 
 (with-eval-after-load 'lsp-mode
-  (add-hook 'c-mode-hook #'lsp)
-  (add-hook 'rust-mode-hook #'lsp)
-  (add-hook 'c++-mode-hook #'lsp))
+  (add-hook 'c-mode-common-hook #'lsp)
+  (add-hook 'rust-mode-hook #'lsp))
 
-(with-eval-after-load 'c++-mode
-  (add-hook 'c++-mode-hook #'turn-on-format-buffer)
-  (add-hook 'c++-mode-hook #'turn-on-show-trailing-whitespace)
-  (add-hook 'c++-mode-hook (mk/custom-cc-keys-adder c++-mode-map)))
-
-(with-eval-after-load 'c-mode
-  (add-hook 'c-mode-hook #'turn-on-format-buffer)
-  (add-hook 'c-mode-hook #'turn-on-show-trailing-whitespace)
-  (add-hook 'c++-mode-hook (mk/custom-cc-keys-adder c-mode-map)))
+(with-eval-after-load 'cc-mode
+  (add-hook 'c-mode-common-hook #'turn-on-format-cc-buffer)
+  (add-hook 'c-mode-common-hook #'turn-on-show-trailing-whitespace)
+  (add-hook 'c-mode-common-hook #'mk/add-custom-cc-keys))

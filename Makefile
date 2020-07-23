@@ -1,6 +1,8 @@
 compiled = lisp/cc-hacks.elc lisp/org-hacks.elc lisp/rust-hacks.elc \
-	lisp/python-hacks.elc
+	lisp/python-hacks.elc lisp/sql-hacks.elc
 prefix = $(HOME)/.local
+packages = clang-tools elpa-spinner
+missing = $(shell dpkg-query --show --showformat='${binary:Package}:${db:Status-Status}\n' $(packages) | grep installed | cut -d: -f1)
 EMACS-BATCH = emacs -batch -f package-initialize 
 COMPILE.el = $(EMACS-BATCH) -f batch-byte-compile-if-not-done
 DIFF = diff -u
@@ -25,8 +27,12 @@ compile-lisp: $(compiled)
 
 install: install-dependencies install-lisp install-dotemacs
 
-install-dependencies:
-	sudo apt install clang-tools elpa-spinner
+install-missing-packages:
+ifdef $(missing)
+	sudo apt install $(missing)
+endif
+
+install-dependencies: install-missing-packages
 	$(EMACS-BATCH) --eval "(package-install 'lsp-mode)"
 
 install-lisp: $(compiled)

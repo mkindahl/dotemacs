@@ -13,9 +13,10 @@
 
 (when (version< "9.2" (org-version))
   (require 'org-tempo))
+
+;; We want the week summary to be displayed in hours, not days.
 (when (version<= "9.1.6" (org-version))
   (require 'org-duration)
-  ;;; We want the week summary to be displayed in hours, not days.
   (setq org-duration-format 'h:mm))
 
 (setq org-latex-listings 'minted)
