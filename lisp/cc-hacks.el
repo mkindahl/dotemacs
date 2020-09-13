@@ -4,6 +4,7 @@
 (require 'lsp-clients)
 
 (defun mk/symbol-from-filename (full-name)
+  "Generate a preprocessor symbol from the file name."
   (let* ((root-dir (expand-file-name (locate-dominating-file full-name ".git")))
 	 (upcase-name (upcase (string-remove-prefix root-dir (expand-file-name full-name)))))
     (message (format "upcase-name: %s" upcase-name))
@@ -15,6 +16,7 @@
     (concat upcase-name "_")))
 
 (defun mk/add-header-include-guard ()
+  "Add header include guard to file."
   (interactive)
   (let ((pp-sym (mk/symbol-from-filename (buffer-file-name))))
     (save-excursion

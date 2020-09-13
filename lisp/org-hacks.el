@@ -62,16 +62,12 @@
 
 ;;; Refile configuraton
 (setq org-refile-use-outline-path 'file
-      org-refile-targets '(("admin.org" :maxlevel . 3)
-                           ("bugs.org" :maxlevel . 2)
-                           ("projects.org" :maxlevel . 3)
-                           ("reviews.org" :maxlevel . 2)
-                           ("refactoring.org" :maxlevel . 2)
-                           ("research.org" :maxlevel . 3)
+      org-refile-targets '(("projects.org" :maxlevel . 3)
+                           ("company.org" :maxlevel . 2)
                            ("someday.org" :maxlevel . 2)))
 
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)"
+      '((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)" "REVIEW(r!)"
                   "|" "DONE(f!)")
         (sequence "DEFERRED(h@/!)" "DELEGATED(d@)" "WAITING(w@/!)"
                   "|" "REASSIGNED(o@)" "CANCELED(x@)")
