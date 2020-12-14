@@ -94,7 +94,7 @@
 	  "* %?\n\n" :empty-lines 1)))
 
 (setq org-tags-exclude-from-inheritance '("project")
-      org-stuck-projects '("/-MAYBE-DONE-COMPLETE-REASSIGNED"
+      org-stuck-projects '("/-DONE-COMPLETE-REASSIGNED"
                            ("NEXT")
                            ()))
 ;;; Some helper functions
