@@ -23,8 +23,8 @@
 (add-to-list 'org-latex-packages-alist '("" "minted"))
 (setq org-latex-pdf-process
       '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
-	"%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
+        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
+        "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"))
 
 ;; Beamer settings
 (add-to-list 'org-latex-classes
@@ -62,8 +62,13 @@
 
 ;;; Refile configuraton
 (setq org-refile-use-outline-path 'file
-      org-refile-targets '(("projects.org" :maxlevel . 3)
-                           ("company.org" :maxlevel . 2)
+      org-refile-targets '(("admin.org" :maxlevel . 3)
+                           ("bugs.org" :maxlevel . 2)
+                           ("projects.org" :maxlevel . 3)
+                           ("reviews.org" :maxlevel . 2)
+                           ("refactoring.org" :maxlevel . 2)
+                           ("research.org" :maxlevel . 3)
+                           ("testing.org" :maxlevel . 2)
                            ("someday.org" :maxlevel . 2)))
 
 (setq org-todo-keywords
@@ -71,8 +76,8 @@
                   "|" "DONE(f!)")
         (sequence "DEFERRED(h@/!)" "DELEGATED(d@)" "WAITING(w@/!)"
                   "|" "REASSIGNED(o@)" "CANCELED(x@)")
-	(sequence "TASK(1)" "RESEARCH(2)" "DESIGN(3!)" "ONGOING(4!)" "REVIEW(5!)" "DELIVERED(8!)"
-		  "|" "COMPLETE(9!)")))
+        (sequence "TASK(1)" "RESEARCH(2)" "DESIGN(3!)" "ONGOING(4!)" "REVIEW(5!)" "DELIVERED(8!)"
+                  "|" "COMPLETE(9!)")))
 
 (setq org-capture-templates
        '(("t" "Todo" entry (file "refile.org")
@@ -80,18 +85,37 @@
           :clock-in t :clock-resume t :empty-lines 1
           :clock-keep nil)
          ("j" "Journal entry"
-	  entry (file+datetree "journal.org")
+          entry (file+datetree "journal.org")
           "* %^{topic} %^{CATEGORY}p\n%i%?\n"
           :empty-lines 1)
+	 ;; Agenda sub-menu. Items to bring up with individuals
+	 ("a" "Templates for agenda items")
+	 ("as" "Agenda items for S")
+	 ("ask" "Agenda items for Sven"
+	  entry (file+olp "agenda.org" "Agenda" "Sven")
+	  "* %?\n\n" :empty-lines 1)
+
+	 ("ae" "Agenda items for E")
+	 ("aen" "Agenda items for Erik"
+	  entry (file+olp "agenda.org" "Agenda" "Erik")
+	  "* %?\n\n" :empty-lines 1)
+	 
+         ;; Meetings sub-menu
+         ("m" "Templates for meetings")
+         ("mg" "Notes for general meetings"
+          entry (file+olp "meetings.org" "General")
+          " *%?\n\n  %T")
+         ("mo" "Notes for 1o1 meetings"
+          entry (file+olp "meetings.org" "Individual")
+          " *%?\n\n  %T")
          ;; Notes sub-menu
          ("n" "Templates for notes of different kinds")
          ("nn" "General note"
-	  entry (file "notes.org")
+          entry (file "notes.org")
           "* %?\n\n" :empty-lines 1)
-	 ("nm" "Notes for meetings")
-	 ("nmc" "Notes for cluster team meeting"
-	  entry (file+olp "notes.org" "Meetings" "Cluster Team Meeting")
-	  "* %?\n\n" :empty-lines 1)))
+         ("nmc" "Notes for cluster team meeting"
+          entry (file+olp "meetings.org" "Regular" "Cluster Team Meeting")
+          "* %?\n\n" :empty-lines 1)))
 
 (setq org-tags-exclude-from-inheritance '("project")
       org-stuck-projects '("/-DONE-COMPLETE-REASSIGNED"
