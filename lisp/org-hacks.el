@@ -11,6 +11,8 @@
 (require 'ox-latex)
 (require 'ox-md)
 
+(load "~/.emacs.d/org-agenda-items")
+
 (when (version< "9.2" (org-version))
   (require 'org-tempo))
 
@@ -64,12 +66,15 @@
 (setq org-refile-use-outline-path 'file
       org-refile-targets '(("admin.org" :maxlevel . 3)
                            ("bugs.org" :maxlevel . 2)
+                           ("support.org" :maxlevel . 2)
                            ("projects.org" :maxlevel . 3)
                            ("reviews.org" :maxlevel . 2)
                            ("refactoring.org" :maxlevel . 2)
                            ("research.org" :maxlevel . 3)
                            ("testing.org" :maxlevel . 2)
-                           ("someday.org" :maxlevel . 2)))
+                           ("someday.org" :maxlevel . 2)
+                           ("timescaledb.org" :maxlevel . 2)
+			   ("community.org" :maxlevel . 2)))
 
 (setq org-todo-keywords
       '((sequence "TODO(t)" "NEXT(n!)" "STARTED(s!)" "REVIEW(r!)"
@@ -80,7 +85,7 @@
                   "|" "COMPLETE(9!)")))
 
 (setq org-capture-templates
-       '(("t" "Todo" entry (file "refile.org")
+       `(("t" "Todo" entry (file "refile.org")
           "* TODO %?\n  CREATED: %u\n\n"
           :clock-in t :clock-resume t :empty-lines 1
           :clock-keep nil)
@@ -88,33 +93,28 @@
           entry (file+datetree "journal.org")
           "* %^{topic} %^{CATEGORY}p\n%i%?\n"
           :empty-lines 1)
-	 ;; Agenda sub-menu. Items to bring up with individuals
-	 ("a" "Templates for agenda items")
-	 ("as" "Agenda items for S")
-	 ("ask" "Agenda items for Sven"
-	  entry (file+olp "agenda.org" "Agenda" "Sven")
-	  "* %?\n\n" :empty-lines 1)
 
-	 ("ae" "Agenda items for E")
-	 ("aen" "Agenda items for Erik"
-	  entry (file+olp "agenda.org" "Agenda" "Erik")
-	  "* %?\n\n" :empty-lines 1)
-	 
+	 ,@mk/people-agenda-items
+
          ;; Meetings sub-menu
          ("m" "Templates for meetings")
          ("mg" "Notes for general meetings"
           entry (file+olp "meetings.org" "General")
-          " *%?\n\n  %T")
+          "* %?\n  %^T" :empty-lines 1)
+         ("mr" "Notes for regular meetings"
+          entry (file+olp "meetings.org" "Regular")
+          "* %?\n  %^T" :empty-lines 1)
          ("mo" "Notes for 1o1 meetings"
           entry (file+olp "meetings.org" "Individual")
-          " *%?\n\n  %T")
+          "* %?\n  %^T" :empty-lines 1)
+
          ;; Notes sub-menu
          ("n" "Templates for notes of different kinds")
          ("nn" "General note"
-          entry (file "notes.org")
+          entry (file+olp "notes.org" "General")
           "* %?\n\n" :empty-lines 1)
-         ("nmc" "Notes for cluster team meeting"
-          entry (file+olp "meetings.org" "Regular" "Cluster Team Meeting")
+	 ("nw" "Question asked"
+          entry (file+olp "notes.org" "Questions")
           "* %?\n\n" :empty-lines 1)))
 
 (setq org-tags-exclude-from-inheritance '("project")
@@ -218,5 +218,5 @@ Skips capture tasks and tasks with subtasks"
 
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cr" 'org-capture)
+(global-set-key "\C-cc" 'org-capture)
 (global-set-key (kbd "<f12>") 'org-agenda)
