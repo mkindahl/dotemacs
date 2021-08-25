@@ -23,22 +23,9 @@ There are two things you can do about this warning:
 ;; You may delete these explanatory comments.
 (package-initialize)
 
-(if (string-match "XEmacs\\|Lucid" emacs-version)
-  ;;; XEmacs
-  (progn
-     (if (file-readable-p "~/.xemacs/init.el")
-        (load "~/.xemacs/init.el" nil t))
-  )
-  ;;; GNU-Emacs
-  (if (file-readable-p "~/.gnu-emacs")
-      (load "~/.gnu-emacs" nil t)
-    (if (file-readable-p "/etc/skel/.gnu-emacs")
-	(load "/etc/skel/.gnu-emacs" nil t)))
-
-  ;; Custom Settings
-  (setq custom-file "~/.gnu-emacs-custom")
-  (load "~/.gnu-emacs-custom" t t)
-)
+;; Load custom file settings.
+(setq custom-file "~/.gnu-emacs-custom")
+(load "~/.gnu-emacs-custom" t t)
 
 ;; System Setting
 (setq system-time-locale "C") ; Make sure that the weekdays in the
