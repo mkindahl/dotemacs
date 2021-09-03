@@ -4,6 +4,7 @@
 (require 'lsp-clients)
 
 (defun mk/symbol-from-filename (full-name)
+  "Generate a preprocessor symbol from the file name."
   (let* ((root-dir (expand-file-name (locate-dominating-file full-name ".git")))
 	 (upcase-name (upcase (string-remove-prefix root-dir (expand-file-name full-name)))))
     (message (format "upcase-name: %s" upcase-name))
@@ -15,6 +16,7 @@
     (concat upcase-name "_")))
 
 (defun mk/add-header-include-guard ()
+  "Add header include guard to file."
   (interactive)
   (let ((pp-sym (mk/symbol-from-filename (buffer-file-name))))
     (save-excursion
@@ -87,15 +89,18 @@ provided key-map."
   (define-key c-mode-base-map "\M-." 'lsp-find-definition)
   (define-key c-mode-base-map "\M-?" 'lsp-find-references))
 
-(defun turn-on-format-cc-buffer ()
-  "Format buffer before saving."
+(defun enable-global-format-cc-buffer ()
+  "Enable formatting buffer before saving."
   (add-hook 'write-contents-functions 'mk/format-cc-buffer))
+
+(defun disable-local-format-cc-buffer ()
+  "Disable formatting buffer before saving locally."
+  (remove-hook 'write-contents-functions 'mk/format-cc-buffer t))
 
 (with-eval-after-load 'lsp-mode
   (add-hook 'c-mode-common-hook #'lsp)
   (add-hook 'rust-mode-hook #'lsp))
 
 (with-eval-after-load 'cc-mode
-  (add-hook 'c-mode-common-hook #'turn-on-format-cc-buffer)
-  (add-hook 'c-mode-common-hook #'turn-on-show-trailing-whitespace)
+  (add-hook 'c-mode-common-hook #'enable-global-format-cc-buffer)
   (add-hook 'c-mode-common-hook #'mk/add-custom-cc-keys))

@@ -6,3 +6,7 @@
 (defun turn-on-pg-format-buffer ()
   "Format buffer before saving."
   (add-hook 'write-contents-functions 'mk/pg-format-buffer))
+
+(with-eval-after-load 'sql
+  (setq sql-product 'postgres))
+

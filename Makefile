@@ -1,10 +1,10 @@
-compiled = lisp/cc-hacks.elc lisp/org-hacks.elc lisp/rust-hacks.elc \
-	lisp/python-hacks.elc lisp/sql-hacks.elc
+sources = $(wildcard lisp/*.el)
+compiled = $(addsuffix .elc, $(basename $(sources)))
 prefix = $(HOME)/.local
-packages = clang-tools elpa-spinner
+packages = clang-format clang-tools elpa-yasnippets elpa-spinner elpa-rust-mode elpa-lsp-mode
 missing = $(shell dpkg-query --show --showformat='${binary:Package}:${db:Status-Status}\n' $(packages) | grep installed | cut -d: -f1)
-EMACS-BATCH = emacs -batch -f package-initialize 
-COMPILE.el = $(EMACS-BATCH) -f batch-byte-compile-if-not-done
+EMACS = emacs
+COMPILE.el = $(EMACS) -batch -f package-initialize -f batch-byte-compile-if-not-done
 DIFF = diff -u
 
 %.elc: %.el
@@ -15,10 +15,10 @@ all: compile-lisp compile-dotemacs
 diff: diff-lisp diff-dotemacs
 
 diff-dotemacs:
-	$(DIFF) dotemacs.el $(HOME)/.emacs
+	$(DIFF) $(HOME)/.emacs dotemacs.el
 
 diff-lisp:
-	$(DIFF) -x '*~' -x '*.elc' lisp $(prefix)/share/emacs/site-lisp
+	$(DIFF) -x '*~' -x '*.elc' $(prefix)/share/emacs/site-lisp lisp 
 
 compile-dotemacs:
 	$(COMPILE.el) dotemacs.el
@@ -33,11 +33,11 @@ ifdef $(missing)
 endif
 
 install-dependencies: install-missing-packages
-	$(EMACS-BATCH) --eval "(package-install 'lsp-mode)"
+	$(EMACS) -batch -f package-initialize --eval "(package-install 'lsp-mode)"
 
 install-lisp: $(compiled)
 	mkdir -p $(prefix)/share/emacs/site-lisp
-	install -t $(prefix)/share/emacs/site-lisp $(compiled) 
+	install -t $(prefix)/share/emacs/site-lisp $(compiled) $(sources)
 
 install-dotemacs:
 	install -T -C dotemacs.el $(HOME)/.emacs
