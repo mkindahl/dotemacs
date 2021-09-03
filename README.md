@@ -19,7 +19,15 @@ Other binaries:
 For Ubuntu 18.04 you can install the dependencies using:
 
 ```
-apt install clang-format clang-tools elpa-yasnippets rust-src elpa-spinner
+apt install clang-format clang-tools elpa-yasnippets rust-src elpa-spinner elpa-rust-mode
+```
+
+### Ubuntu 20.04
+
+For Ubuntu 20.04 you can install the dependencies using:
+
+```
+apt install clang-format clang-tools elpa-yasnippets elpa-spinner elpa-rust-mode elpa-lsp-mode
 ```
 
 ### Installing Rust Analyzer
