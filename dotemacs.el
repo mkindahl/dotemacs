@@ -54,22 +54,12 @@ There are two things you can do about this warning:
 (global-set-key "\C-x\C-n" 'next-error)
 (global-set-key "\C-x\C-p" 'previous-error)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(clang-format-style "Google")
- '(indent-tabs-mode t)
- '(org-agenda-files
-   (quote
-    ("~/org/bugs.org" "~/org/someday.org" "~/org/admin.org" "~/org/research.org" "~/org/meetings.org" "~/org/refactoring.org" "~/org/reviews.org" "~/org/projects.org" "~/org/refile.org")))
- '(org-src-preserve-indentation t)
- '(rust-format-on-save t))
+;; Promela mode settings
+(autoload 'promela-mode "promela-mode" "PROMELA mode" t)
+(add-to-list 'auto-mode-alist '("\\.\\(spin\\|pml\\)\\'" . promela-mode))
 
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Markdown settings
+(add-to-list 'auto-mode-alist '("\\.\\(md\\|markdown\\)\\'" . markdown-mode))
+
+;;; TeX mode setting
+(setq tex-dvi-view-command "okular")
