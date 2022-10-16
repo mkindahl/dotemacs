@@ -98,9 +98,13 @@
 
          ;; Meetings sub-menu
          ("m" "Templates for meetings")
+         ("ma" "Notes for ad-hoc meetings"
+          entry (file+olp+datetree "meetings.org" "Ad-hoc")
+          "* %?\n  %T\n\n"
+	  :clock-in t :clock-resume t :empty-lines 1)
          ("mg" "Notes for general meetings"
           entry (file+olp "meetings.org" "General")
-          "* %?\n  %^T" :empty-lines 1)
+          "* %?\n" :empty-lines 1)
          ("mr" "Notes for regular meetings"
           entry (file+olp "meetings.org" "Regular")
           "* %?\n  %^T" :empty-lines 1)
@@ -212,6 +216,7 @@ Skips capture tasks and tasks with subtasks"
    (latex . t)
    (perl . t)
    (python . t)
+   (rust . t)
    (scheme . t)))
 
 ;;; Defining keys

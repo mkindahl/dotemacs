@@ -1,7 +1,9 @@
+;;; Hacks to configure C/C++ mode
+
 (require 'clang-format)
 (require 'cc-mode)
 (require 'lsp-mode)
-(require 'lsp-clients)
+;(require 'lsp-clients)
 
 (defun mk/symbol-from-filename (full-name)
   "Generate a preprocessor symbol from the file name."
