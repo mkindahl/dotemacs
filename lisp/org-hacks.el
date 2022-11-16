@@ -27,6 +27,8 @@
   (require 'org-duration)
   (setq org-duration-format 'h:mm))
 
+;;; LaTeX settings
+
 (setq org-latex-listings 'minted)
 (add-to-list 'org-latex-packages-alist '("" "minted"))
 (setq org-latex-pdf-process
@@ -42,7 +44,6 @@
                ("\\subsection\{%s\}" . "\\subsection*\{%s\}")
                ("\\subsubsection\{%s\}" . "\\subsubsection*\{%s\}")))
 
-;; LaTeX settings
 (add-to-list 'org-latex-packages-alist '("" "listing"))
 (add-to-list 'org-latex-packages-alist '("" "color"))
 
@@ -76,6 +77,7 @@
                            ("projects.org" :maxlevel . 3)
                            ("reviews.org" :maxlevel . 2)
                            ("refactoring.org" :maxlevel . 2)
+                           ("hiring.org" :maxlevel . 2)
                            ("research.org" :maxlevel . 3)
                            ("testing.org" :maxlevel . 2)
                            ("someday.org" :maxlevel . 2)
@@ -92,12 +94,12 @@
 
 (setq org-capture-templates
        `(("t" "Todo" entry (file "refile.org")
-          "* TODO %?\n  CREATED: %u\n\n"
+          "* TODO %?\nCREATED: %u\n\n"
           :clock-in t :clock-resume t :empty-lines 1
           :clock-keep nil)
          ("j" "Journal entry"
           entry (file+datetree "journal.org")
-          "* %^{topic} %^{CATEGORY}p\n%i%?\n"
+          "* %^{topic}%^{CATEGORY}p\n%i%?\n"
           :empty-lines 1)
 
 	 ,@mk/people-agenda-items
@@ -106,17 +108,17 @@
          ("m" "Templates for meetings")
          ("ma" "Notes for ad-hoc meetings"
           entry (file+olp+datetree "meetings.org" "Ad-hoc")
-          "* %?\n  %T\n\n"
+          "* %?\n%T\n\n"
 	  :clock-in t :clock-resume t :empty-lines 1)
          ("mg" "Notes for general meetings"
           entry (file+olp "meetings.org" "General")
           "* %?\n" :empty-lines 1)
          ("mr" "Notes for regular meetings"
           entry (file+olp "meetings.org" "Regular")
-          "* %?\n  %^T" :empty-lines 1)
+          "* %?\n%^T" :empty-lines 1)
          ("mo" "Notes for 1o1 meetings"
           entry (file+olp "meetings.org" "Individual")
-          "* %?\n  %^T" :empty-lines 1)
+          "* %?\n%^T" :empty-lines 1)
 
          ;; Notes sub-menu
          ("n" "Templates for notes of different kinds")
