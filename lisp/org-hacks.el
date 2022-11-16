@@ -11,7 +11,13 @@
 (require 'ox-latex)
 (require 'ox-md)
 
-(load "~/.emacs.d/org-agenda-items")
+(defvar mk/people-agenda-items nil "Agenda items for people")
+
+;; These are site-specific functions and definitions. It is expected
+;; to define the following variables and functions:
+;;
+;; * mk/people-agenda-items: list of agenda items for individuals.
+(load "~/.emacs.d/org-site" t)
 
 (when (version< "9.2" (org-version))
   (require 'org-tempo))
