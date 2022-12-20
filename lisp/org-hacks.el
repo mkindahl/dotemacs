@@ -104,6 +104,11 @@
 
 	 ,@mk/people-agenda-items
 
+	 ;; Travel
+	 ("r" "Travel" entry (file+headline "admin.org" "Travel")
+	  (file "~/org/templates/travel.org")
+	  :empty-lines 1)
+
          ;; Meetings sub-menu
          ("m" "Templates for meetings")
          ("ma" "Notes for ad-hoc meetings"
