@@ -113,8 +113,7 @@
          ("m" "Templates for meetings")
          ("ma" "Notes for ad-hoc meetings"
           entry (file+olp+datetree "meetings.org" "Ad-hoc")
-          "* %?\n%T\n\n"
-	  :clock-in t :clock-resume t :empty-lines 1)
+          "* %?\n%^T\n\n" :empty-lines 1)
          ("mg" "Notes for general meetings"
           entry (file+olp "meetings.org" "General")
           "* %?\n" :empty-lines 1)
@@ -230,6 +229,7 @@ Skips capture tasks and tasks with subtasks"
    (perl . t)
    (python . t)
    (rust . t)
+   (ditaa . t)
    (scheme . t)))
 
 ;;; Defining keys
