@@ -83,7 +83,6 @@ directory. Otherwise, use the value of 'clang-format-style."
 (defun mk/add-custom-cc-keys ()
   "Return a function that when executed adds custom keys to the
 provided key-map."
-  (message "Adding keys")
   (define-key c-mode-base-map "\C-chw" 'mk/add-header-include-guard)
   (define-key c-mode-base-map "\C-c#0" 'mk/comment-out)
   (define-key c-mode-base-map "\C-c#d" 'mk/ifdef-code)
@@ -100,9 +99,12 @@ provided key-map."
   (remove-hook 'write-contents-functions 'mk/format-cc-buffer t))
 
 (with-eval-after-load 'lsp-mode
-  (add-hook 'c-mode-common-hook #'lsp)
+  (add-hook 'c-mode-hook #'lsp)
+  (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'rust-mode-hook #'lsp))
 
 (with-eval-after-load 'cc-mode
-  (add-hook 'c-mode-common-hook #'enable-global-format-cc-buffer)
-  (add-hook 'c-mode-common-hook #'mk/add-custom-cc-keys))
+  (add-hook 'c-mode-hook #'enable-global-format-cc-buffer)
+  (add-hook 'c-mode-hook #'mk/add-custom-cc-keys)
+  (add-hook 'c++-mode-hook #'enable-global-format-cc-buffer)
+  (add-hook 'c++-mode-hook #'mk/add-custom-cc-keys))
