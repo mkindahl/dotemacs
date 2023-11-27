@@ -103,6 +103,12 @@ provided key-map."
   (add-hook 'c++-mode-hook #'lsp)
   (add-hook 'rust-mode-hook #'lsp))
 
+;; Since this mode inherits from c-mode-hook some functionality cannot
+;; be used, in particular, clang-format and lsp
+(with-eval-after-load 'bpftrace-mode
+  (remove-hook 'write-contents-functions 'mk/format-cc-buffer t)
+  (remove-hook 'c-mode-hook #'lsp t))
+
 (with-eval-after-load 'cc-mode
   (add-hook 'c-mode-hook #'enable-global-format-cc-buffer)
   (add-hook 'c-mode-hook #'mk/add-custom-cc-keys)
