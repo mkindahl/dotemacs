@@ -9,7 +9,6 @@
   "Generate a preprocessor symbol from the file name."
   (let* ((root-dir (expand-file-name (locate-dominating-file full-name ".git")))
 	 (upcase-name (upcase (string-remove-prefix root-dir (expand-file-name full-name)))))
-    (message (format "upcase-name: %s" upcase-name))
     (dotimes (i (length upcase-name))
       (let ((c (aref upcase-name i)))
         (unless (or (and (>= c ?A) (<= c ?Z))
@@ -106,11 +105,11 @@ provided key-map."
 ;; Since this mode inherits from c-mode-hook some functionality cannot
 ;; be used, in particular, clang-format and lsp
 (with-eval-after-load 'bpftrace-mode
-  (remove-hook 'write-contents-functions 'mk/format-cc-buffer t)
-  (remove-hook 'c-mode-hook #'lsp t))
+  (remove-hook 'c-mode-hook #'lsp)
+  (remove-hook 'c-mode-hook #'enable-global-format-cc-buffer))
 
 (with-eval-after-load 'cc-mode
   (add-hook 'c-mode-hook #'enable-global-format-cc-buffer)
-  (add-hook 'c-mode-hook #'mk/add-custom-cc-keys)
   (add-hook 'c++-mode-hook #'enable-global-format-cc-buffer)
+  (add-hook 'c-mode-hook #'mk/add-custom-cc-keys)
   (add-hook 'c++-mode-hook #'mk/add-custom-cc-keys))
