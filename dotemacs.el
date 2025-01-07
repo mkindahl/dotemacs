@@ -23,6 +23,9 @@ There are two things you can do about this warning:
 ;; You may delete these explanatory comments.
 (package-initialize)
 
+;; Set the load path to use
+(add-to-list 'load-path "~/.local/share/emacs/site-lisp")
+
 ;; Load custom file settings.
 (setq custom-file "~/.gnu-emacs-custom")
 (load "~/.gnu-emacs-custom" t t)
@@ -31,9 +34,6 @@ There are two things you can do about this warning:
 (setq system-time-locale "C") ; Make sure that the weekdays in the
 			      ; time stamps of your Org mode files and
 			      ; in the agenda appear in English.
-
-;; Set the load path to use
-(add-to-list 'load-path "~/.local/share/emacs/site-lisp")
 
 (load-library "org-hacks")              ;Org Mode settings
 (load-library "cc-hacks")               ;C/C++ Settings
@@ -55,3 +55,21 @@ There are two things you can do about this warning:
 
 ;;; TeX mode setting
 (setq tex-dvi-view-command "okular")
+
+;;; Tree-sitter configuration
+;; (when (>= emacs-major-version 29)
+;;   (progn
+;;     (setq treesit-language-source-alist
+;; 	  '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+;; 	    (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+;; 	    (cmake "https://github.com/uyha/tree-sitter-cmake")
+;; 	    (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+;; 	    (go "https://github.com/tree-sitter/tree-sitter-go")
+;; 	    (json "https://github.com/tree-sitter/tree-sitter-json")
+;; 	    (make "https://github.com/alemuller/tree-sitter-make")
+;; 	    (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+;; 	    (python "https://github.com/tree-sitter/tree-sitter-python")
+;; 	    (toml "https://github.com/tree-sitter/tree-sitter-toml")
+;; 	    (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+;;     (mapc #'treesit-install-language-grammar
+;; 	  (mapcar #'car treesit-language-source-alist))))

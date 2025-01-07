@@ -1,11 +1,10 @@
 ;; Org-mode settings
 
-;(add-to-list 'load-path "/usr/share/emacs/site-lisp/org")
-
 (require 'ob-plantuml)
 (require 'org)
 (require 'org-agenda)
 (require 'org-capture)
+(require 'org-duration)
 (require 'org-clock)
 (require 'ox-beamer)
 (require 'ox-latex)
@@ -29,8 +28,6 @@
 
 ;;; LaTeX settings
 
-(setq org-latex-listings 'minted)
-(add-to-list 'org-latex-packages-alist '("" "minted"))
 (setq org-latex-pdf-process
       '("%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
         "%latex -shell-escape -interaction nonstopmode -output-directory %o %f"
