@@ -48,7 +48,7 @@
 the buffer using clang-format.
 
 Use the .clang-format file, if one exists in some parent
-directory. Otherwise, use the value of 'clang-format-style."
+directory. Otherwise, use the value of clang-format-style."
   (save-excursion
     (delete-trailing-whitespace (point-min) (point-max))
     (mk/clang-format-buffer
@@ -89,27 +89,29 @@ provided key-map."
   (define-key c-mode-base-map "\M-." 'lsp-find-definition)
   (define-key c-mode-base-map "\M-?" 'lsp-find-references))
 
+(defun mk/enable-lsp ()
+  "Enable LSP for the buffer.
+We hard-code to not enable it for bpftrace-mode since it has no good hooks."
+  (unless (string-equal major-mode "bpftrace-mode") (lsp)))
+
 (defun enable-global-format-cc-buffer ()
-  "Enable formatting buffer before saving."
-  (add-hook 'write-contents-functions 'mk/format-cc-buffer))
+  "Enable formatting buffer before saving.
+We hard-code to not enable it for bpftrace-mode since it has no good hooks."
+  (unless (string-equal major-mode "bpftrace-mode")
+    (message "Enabling format-cc-buffer")
+    (add-hook 'write-contents-functions 'mk/format-cc-buffer)))
 
 (defun disable-local-format-cc-buffer ()
   "Disable formatting buffer before saving locally."
+  (message "Disabling format-cc-buffer")
   (remove-hook 'write-contents-functions 'mk/format-cc-buffer t))
 
 (with-eval-after-load 'lsp-mode
-  (add-hook 'c-mode-hook #'lsp)
-  (add-hook 'c++-mode-hook #'lsp)
-  (add-hook 'rust-mode-hook #'lsp))
-
-;; Since this mode inherits from c-mode-hook some functionality cannot
-;; be used, in particular, clang-format and lsp
-(with-eval-after-load 'bpftrace-mode
-  (remove-hook 'c-mode-hook #'lsp)
-  (remove-hook 'c-mode-hook #'enable-global-format-cc-buffer))
+  (message "Running lsp-mode evals: %S" c-mode-common-hook)
+  (add-hook 'c-mode-common-hook #'mk/enable-lsp)
+  (add-hook 'rust-mode-hook #'mk/enable-lsp))
 
 (with-eval-after-load 'cc-mode
-  (add-hook 'c-mode-hook #'enable-global-format-cc-buffer)
-  (add-hook 'c++-mode-hook #'enable-global-format-cc-buffer)
-  (add-hook 'c-mode-hook #'mk/add-custom-cc-keys)
-  (add-hook 'c++-mode-hook #'mk/add-custom-cc-keys))
+  (message "Running c-common-mode evals: %S" c-mode-common-hook)
+  (add-hook 'c-mode-common-hook #'enable-global-format-cc-buffer)
+  (add-hook 'c-mode-common-hook #'mk/add-custom-cc-keys))
