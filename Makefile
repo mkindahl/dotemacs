@@ -12,6 +12,14 @@ DIFF = diff -u
 
 all: compile-lisp compile-dotemacs
 
+clean: clean-lisp clean-dotemacs
+
+clean-dotemacs:
+	rm dotemacs.elc
+
+clean-lisp:
+	rm $(compiled)
+
 diff: diff-lisp diff-dotemacs
 
 diff-dotemacs:
