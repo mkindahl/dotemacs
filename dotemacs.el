@@ -31,16 +31,18 @@ There are two things you can do about this warning:
 (load "~/.gnu-emacs-custom" t t)
 
 ;; System Setting
-(setq system-time-locale "C") ; Make sure that the weekdays in the
-			      ; time stamps of your Org mode files and
-			      ; in the agenda appear in English.
+(setq-default system-time-locale "C") ; Make sure that the weekdays in
+				      ; the time stamps of your Org
+				      ; mode files and in the agenda
+				      ; appear in English.
+(setq-default indent-tabs-mode nil)   ; Do not indent using tabs
 
-(load-library "org-hacks")              ;Org Mode settings
-(load-library "cc-hacks")               ;C/C++ Settings
-(load-library "rust-hacks")             ;Rust Settings
-(load-library "python-hacks")           ;Python Settings
-(load-library "sql-hacks")		;SQL Settings
-(load-library "perl-hacks")		;Perl settings
+(load-library "org-hacks")            ; Org Mode settings
+(load-library "cc-hacks")	      ; C/C++ Settings
+(load-library "rust-hacks")	      ; Rust Settings
+(load-library "python-hacks")	      ; Python Settings
+(load-library "sql-hacks")	      ; SQL Settings
+(load-library "perl-hacks")	      ; Perl settings
 
 (global-set-key "\C-x\C-e" 'compile)
 (global-set-key "\C-x\C-n" 'next-error)
