@@ -38,11 +38,12 @@ There are two things you can do about this warning:
 (setq-default indent-tabs-mode nil)   ; Do not indent using tabs
 
 (load-library "org-hacks")            ; Org Mode settings
-(load-library "cc-hacks")	      ; C/C++ Settings
-(load-library "rust-hacks")	      ; Rust Settings
-(load-library "python-hacks")	      ; Python Settings
-(load-library "sql-hacks")	      ; SQL Settings
-(load-library "perl-hacks")	      ; Perl settings
+(load-library "cc-hacks")	      ; C/C++ language settings
+(load-library "rust-hacks")	      ; Rust language settings
+(load-library "python-hacks")	      ; Python language settings
+(load-library "sql-hacks")	      ; SQL language settings
+(load-library "perl-hacks")	      ; Perl language settings
+(load-library "go-hacks")	      ; Go language settings
 
 (global-set-key "\C-x\C-e" 'compile)
 (global-set-key "\C-x\C-n" 'next-error)

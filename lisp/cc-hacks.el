@@ -92,7 +92,7 @@ provided key-map."
 (defun mk/enable-lsp ()
   "Enable LSP for the buffer.
 We hard-code to not enable it for bpftrace-mode since it has no good hooks."
-  (unless (string-equal major-mode "bpftrace-mode") (lsp)))
+  (unless (string-equal major-mode "bpftrace-mode") (lsp-deferred)))
 
 (defun enable-global-format-cc-buffer ()
   "Enable formatting buffer before saving.
@@ -108,8 +108,7 @@ We hard-code to not enable it for bpftrace-mode since it has no good hooks."
 
 (with-eval-after-load 'lsp-mode
   (message "Running lsp-mode evals: %S" c-mode-common-hook)
-  (add-hook 'c-mode-common-hook #'mk/enable-lsp)
-  (add-hook 'rust-mode-hook #'mk/enable-lsp))
+  (add-hook 'c-mode-common-hook #'mk/enable-lsp))
 
 (with-eval-after-load 'cc-mode
   (message "Running c-common-mode evals: %S" c-mode-common-hook)
