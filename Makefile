@@ -1,7 +1,7 @@
 sources = $(wildcard lisp/*.el)
 compiled = $(addsuffix .elc, $(basename $(sources)))
 prefix = $(HOME)/.local
-packages = clang-tools elpa-spinner perltidy
+packages = clang-tools clang-format elpa-spinner perltidy elpa-lsp-mode elpa-rust-mode
 missing = $(shell dpkg-query --show --showformat='${binary:Package}:${db:Status-Status}\n' $(packages) | grep installed | cut -d: -f1)
 EMACS = emacs
 COMPILE.el = $(EMACS) -batch -f package-initialize -f batch-byte-compile-if-not-done

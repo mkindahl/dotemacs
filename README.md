@@ -8,7 +8,7 @@ set of other files that I compile to make it work a little speedier.
 For Ubuntu 18.04 you can install the dependencies using:
 
 ```
-sudo apt install clang-tools elpa-spinner
+sudo apt install clang-tools clang-format perltidy elpa-spinner elpa-lsp-mode elpa-rust-mode
 ```
 
 In addition, the `lsp-mode` package need to be installed into Emacs.
